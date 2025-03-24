@@ -2,7 +2,7 @@ python-dotenv
 telegraph==2.2.0
 TgCrypto==1.2.5
 tornado==6.4.1
-py-tgcalls==2.0.2
+py-tgcalls==2.0.6
 rich==13.7.1
 pytz==2024.1
 psutil
@@ -20,7 +20,7 @@ uvloop
 pySmartDL
 html2text
 removebg
-geopy
+pySmartDL
 aiofiles==24.1.0
 aiohttp==3.9.5
 aiosignal==1.3.1
@@ -40,8 +40,4 @@ opencv-python-headless==4.10.0.82
 pyromod==1.5
 pykeyboard
 httpx[http2]==0.27.2
-git+https://github.com/akbarbotz3/lahk
-openai
-pydub
-search_engine_parser
-qrcode
+git+https://github.com/hakutakaid/pyrogram
