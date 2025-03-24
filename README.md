@@ -3,10 +3,10 @@
 apt update && apt upgrade -y
 ```
 ```
-git clone https://github.com/aleeesio/ubotalfnew
+git clone https://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@github.com/xhinntzy/userbot
 ```
 ```
-cd ubott && screen -S ubott
+cd userbot && screen -S userbot
 ```
 ```
 apt install ffmpeg -y
@@ -18,7 +18,7 @@ bash installnode.sh
 apt install python3.10-venv
 ```
 ```
-python3 -m venv venv && source venv/bin/activate
+python3 -m venv userbot && source userbot/bin/activate
 ```
 ```
 pip3 install -r requirements.txt
@@ -27,22 +27,7 @@ pip3 install -r requirements.txt
 cp sample.env .env && nano .env
 ```
 ```
-screen -S ubott
-```
-```
-python3 -m PyroUbot
-```
-```
----------- Menghidupan jika ubot mati -------------
-```
-```
-cd ubotalfnew && screen -S ubotalfnew
-```
-```
-python3 -m venv venv && source venv/bin/activate
-```
-```
-screen -S ubotalfnew
+screen -S userbot
 ```
 ```
 python3 -m PyroUbot
