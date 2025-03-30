@@ -3,7 +3,7 @@
 apt update && apt upgrade -y
 ```
 ```
-git clone https://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@github.com/xhinntzy/userbot
+git clone https://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@github.com/xhinntzy/userbot
 ```
 ```
 cd userbot && screen -S userbot
