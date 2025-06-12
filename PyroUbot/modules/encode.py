@@ -32,48 +32,38 @@ const JsConfuser = require("js-confuser");
 
   const obfuscatedCode = await JsConfuser.obfuscate(code, {
     target: "node",
-    calculator: false,
-    compact: true,
-    controlFlowFlattening: 1,
-    deadCode: 1,
-    dispatcher: true,
-    duplicateLiteralsRemoval: 1,
-    flatten: true,
-    globalConcealing: true,
-    hexadecimalNumbers: false,
-    identifierGenerator: function () {
-      const unicodeCharsStart = ['break', '火火火', 'if'];
-      const unicodeCharsEnd = ['const', '气‌和气‌', 'return'];
-      const randomString = Math.random().toString(36).substring(2, 12);
-      const charStart = unicodeCharsStart[Math.floor(Math.random() * unicodeCharsStart.length)];
-      const charEnd = unicodeCharsEnd[Math.floor(Math.random() * unicodeCharsEnd.length)];
-      return `$${charStart}‌$${randomString}$${charEnd}$`;
-    },
-    lock: {
-      antiDebug: 1,
-      integrity: 1,
-      selfDefending: true,
-    },
-    minify: true,
-    movedDeclarations: true,
-    objectExtraction: true,
-    opaquePredicates: true,
-    renameGlobals: true,
-    renameVariables: true,
-    shuffle: {
-      hash: 1,
-      true: 1,
-    },
-    stringCompression: true,
-    stringConcealing: true,
-    stringEncoding: 0.05,
-    stringSplitting: true,
-  });
+            target: "browser",
+            hexadecimalNumbers: false,
+            controlFlowFlattening: 0.4,
+            deadCode: 0.5,
+            dispatcher: true,
+            identifierGenerator: function () {
+                        return "$var$const$" + Math.random().toString(36).substring(7);
+            },
+            duplicateLiteralsRemoval: true,
+            flatten: true,
+            globalConcealing: 0.9,
+            minify: true,
+            movedDeclarations: true,
+            objectExtraction: true,
+            opaquePredicates: true,
+            renameVariables: true,
+            renameGlobals: true,
+            shuffle: {
+        hash: false,
+        true: false
+            },
+            stack: true,
+            stringCompression: true,
+            stringConcealing: true,
+            stringEncoding: 0,
+            stringSplitting: false
+        });
 
   const header = `
 /*
 ~ Kode di-obfuscate Hard Obf
-~ Telegram: t.me/BirdCella
+~ Telegram: t.me/rugibanget
 ~ Covz Confuser Unicode Type
 
 © Cella
