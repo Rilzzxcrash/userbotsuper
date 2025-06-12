@@ -1,5 +1,4 @@
-import random
-import requests
+import aiohttp
 from PyroUbot import *
 
 __MODULE__ = "luminai"
@@ -12,27 +11,28 @@ Perintah : <code>{0}lumin</code>
 
 @PY.UBOT("lumin")
 async def _(client, message):
+    if len(message.command) < 2:
+        return await message.reply_text(
+            "<emoji id=5019523782004441717>❌</emoji> Mohon gunakan format yang benar.\nContoh: <code>.lumin halo</code>"
+        )
+
+    prs = await message.reply_text("<emoji id=5319230516929502602>🔍</emoji> Menjawab...")
+    text = message.text.split(' ', 1)[1]
+
+    url = f"https://xoo-api.vercel.app/luminai?text={text}"
+
     try:
-        if len(message.command) < 2:
-            await message.reply_text(
-                "<emoji id=5019523782004441717>❌</emoji> Mohon gunakan format yang benar.\nContoh: <code>.lumin halo</code>"
-            )
-            return
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as resp:
+                if resp.status != 200:
+                    return await prs.edit(f"❌ API Error: {resp.status}")
+                data = await resp.json()
 
-        prs = await message.reply_text("<emoji id=5319230516929502602>🔍</emoji> Menjawab...")
-        query = message.text.split(' ', 1)[1]
-        response = requests.get(f'https://api.diioffc.web.id/api/ai/luminai?query={query}')
-
-        try:
-            data = response.json()
-
-            if "result" in data and "message" in data["result"]:
-                x = data["result"]["message"]
-                await prs.edit(f"<blockquote>{x}</blockquote>")
-            else:
-                await prs.edit("❌ Respons API tidak memiliki data yang diharapkan.")
-        except Exception as err:
-            await prs.edit(f"⚠️ Terjadi kesalahan saat memproses respons API: {err}")
+        if "result" in data and "message" in data["result"]:
+            jawaban = data["result"]["message"]
+            await prs.edit(f"<blockquote>{jawaban}</blockquote>")
+        else:
+            await prs.edit("❌ Respons API tidak memiliki data yang diharapkan.")
 
     except Exception as e:
-        await message.reply_text(f"⚠️ Terjadi kesalahan: {e}")
+        await prs.edit(f"⚠️ Terjadi kesalahan: {e}")
