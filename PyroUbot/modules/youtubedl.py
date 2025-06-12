@@ -103,11 +103,21 @@ async def song_cmd(client, message):
     download_url = f"https://api-simplebot.vercel.app/download/ytmp3?apikey={APIKEY}&url={video_url}"
     try:
         audio = await fetch_json(download_url)
-        audio_url = audio["result"]["url"]
-        title = audio["result"]["title"]
-        duration = audio["result"]["duration"]
-        channel = audio["result"]["uploader"]
-        thumb = audio["result"]["thumbnail"]
+        if "result" not in audio:
+            return await infomsg.edit(f"{ggl} Gagal mendownload audio!\n\nTidak ada data `result`.\n\n{audio}")
+
+        result = audio["result"]
+        missing_keys = [key for key in ["url", "title", "uploader", "thumbnail"] if key not in result]
+        if missing_keys:
+            return await infomsg.edit(
+                f"{ggl} Gagal mendownload audio!\n\nData hilang: {', '.join(missing_keys)}\n\n{result}"
+            )
+
+        audio_url = result["url"]
+        title = result["title"]
+        duration = result.get("duration", "Tidak diketahui")  # fallback jika tidak ada
+        channel = result["uploader"]
+        thumb = result["thumbnail"]
     except Exception as e:
         return await infomsg.edit(f"{ggl} Gagal mendownload audio!\n\n{e}")
 
