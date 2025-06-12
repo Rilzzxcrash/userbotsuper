@@ -38,7 +38,6 @@ const JsConfuser = require("js-confuser");
     deadCode: 1,
     dispatcher: true,
     duplicateLiteralsRemoval: 1,
-    es5: true,
     flatten: true,
     globalConcealing: true,
     hexadecimalNumbers: false,
