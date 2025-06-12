@@ -64,7 +64,6 @@ const JsConfuser = require("js-confuser");
       hash: 1,
       true: 1,
     },
-    stack: true,
     stringCompression: true,
     stringConcealing: true,
     stringEncoding: 0.05,
