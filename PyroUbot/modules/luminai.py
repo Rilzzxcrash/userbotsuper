@@ -13,12 +13,11 @@ Perintah : <code>{0}lumin</code>
 async def _(client, message):
     if len(message.command) < 2:
         return await message.reply_text(
-            "<emoji id=5019523782004441717>❌</emoji> Mohon gunakan format yang benar.\nContoh: <code>.lumin halo</code>"
+            "❌ Mohon gunakan format yang benar.\nContoh: <code>.lumin halo</code>"
         )
 
-    prs = await message.reply_text("<emoji id=5319230516929502602>🔍</emoji> Menjawab...")
-    text = message.text.split(' ', 1)[1]
-
+    prs = await message.reply_text("🔍 Menjawab…")
+    text = message.text.split(' ', 1)[1].strip()
     url = f"https://xoo-api.vercel.app/luminai?text={text}"
 
     try:
@@ -27,12 +26,22 @@ async def _(client, message):
                 if resp.status != 200:
                     return await prs.edit(f"❌ API Error: {resp.status}")
                 data = await resp.json()
-
-        if "result" in data and "message" in data["result"]:
-            jawaban = data["result"]["message"]
-            await prs.edit(f"<blockquote>{jawaban}</blockquote>")
-        else:
-            await prs.edit("❌ Respons API tidak memiliki data yang diharapkan.")
-
+    except aiohttp.ClientError as e:
+        return await prs.edit(f"⚠️ Jaringan gagal: {e}")
     except Exception as e:
-        await prs.edit(f"⚠️ Terjadi kesalahan: {e}")
+        return await prs.edit(f"⚠️ Terjadi kesalahan: {e}")
+
+    # Cek dan ambil respon
+    jawaban = None
+    if isinstance(data, dict):
+        jawaban = data.get("result", {}).get("message") or data.get("message")
+        if not jawaban and isinstance(data.get("result"), str):
+            jawaban = data["result"]
+        if not jawaban and isinstance(data.get("answer"), str):
+            jawaban = data["answer"]
+
+    if jawaban:
+        await prs.edit(f"<blockquote>{jawaban}</blockquote>")
+    else:
+        # tampilkan respons lengkap untuk debugging
+        await prs.edit(f"❌ Respons API tidak memiliki data yang diharapkan:\n\n```json\n{data}```")
