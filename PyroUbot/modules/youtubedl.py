@@ -82,15 +82,17 @@ async def fetch_json(url):
 @PY.UBOT("song")
 @PY.TOP_CMD
 async def song_cmd(client, message):
-    ggl = await EMO.GAGAL(client)
-    sks = await EMO.BERHASIL(client)
-    prs = await EMO.PROSES(client)
+    ggl = EMO.GAGAL
+    sks = EMO.BERHASIL
+    prs = EMO.PROSES
 
     if len(message.command) < 2:
-        return await message.reply_text(f"{ggl} audio tidak ditemukan ! mohon masukan judul video dengan benar.")
+        return await message.reply_text(
+            f"{ggl} audio tidak ditemukan! Mohon masukkan judul video dengan benar."
+        )
 
     query = message.text.split(None, 1)[1]
-    infomsg = await message.reply_text(f"{prs} pencarian...")
+    infomsg = await message.reply_text(f"{prs} Mencari lagu...")
 
     search_url = f"https://api-simplebot.vercel.app/search/youtube?apikey={APIKEY}&q={query}"
     try:
@@ -113,7 +115,7 @@ async def song_cmd(client, message):
         duration = result.get("duration") or result.get("metadata", {}).get("lengthSeconds", "Tidak diketahui")
         channel = result.get("uploader") or result.get("author", {}).get("name", "Tidak diketahui")
         thumb = result.get("thumbnail") or result.get("metadata", {}).get("thumbnail")
-        video_url = result.get("url") or video_url  # fallback ke video sebelumnya jika hilang
+        video_url = result.get("url") or video_url
 
         if not all([title, audio_url, channel, thumb]):
             return await infomsg.edit(
