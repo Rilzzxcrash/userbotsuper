@@ -94,7 +94,7 @@ const JsConfuser = require("js-confuser");
 */
 `;
 
-  const finalCode = \`\${header}\\n\${obfuscatedCode}\`;
+const finalCode = `${header}\n${obfuscatedCode};`;
 
   fs.writeFileSync(outputFile, finalCode, "utf-8");
 })();
