@@ -107,17 +107,19 @@ async def song_cmd(client, message):
             return await infomsg.edit(f"{ggl} Gagal mendownload audio!\n\nTidak ada data `result`.\n\n{audio}")
 
         result = audio["result"]
-        missing_keys = [key for key in ["url", "title", "uploader", "thumbnail"] if key not in result]
-        if missing_keys:
+
+        title = result.get("title")
+        audio_url = result.get("media") or result.get("url")
+        duration = result.get("duration") or result.get("metadata", {}).get("lengthSeconds", "Tidak diketahui")
+        channel = result.get("uploader") or result.get("author", {}).get("name", "Tidak diketahui")
+        thumb = result.get("thumbnail") or result.get("metadata", {}).get("thumbnail")
+        video_url = result.get("url") or video_url  # fallback ke video sebelumnya jika hilang
+
+        if not all([title, audio_url, channel, thumb]):
             return await infomsg.edit(
-                f"{ggl} Gagal mendownload audio!\n\nData hilang: {', '.join(missing_keys)}\n\n{result}"
+                f"{ggl} Gagal mendownload audio!\n\nBeberapa data penting hilang.\n\n{result}"
             )
 
-        audio_url = result["url"]
-        title = result["title"]
-        duration = result.get("duration", "Tidak diketahui")  # fallback jika tidak ada
-        channel = result["uploader"]
-        thumb = result["thumbnail"]
     except Exception as e:
         return await infomsg.edit(f"{ggl} Gagal mendownload audio!\n\n{e}")
 
