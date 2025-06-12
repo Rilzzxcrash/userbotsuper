@@ -31,27 +31,25 @@ async def encrypt_js(client: Client, message: Message):
     if not file_name.endswith('.js'):
         return await message.reply("❌ File harus berekstensi .js!")
 
-    # Mengunduh file dari Telegram
     msg = await message.reply("⚡ Mengunduh file...")
-    file_path = await client.download_media(message.reply_to_message.document)
+    input_path = await client.download_media(message.reply_to_message.document)
+    output_path = f"./encrypted_{file_name}"
 
-    await msg.edit("⚡ Memproses encrypt hard code...")
+    await msg.edit("⚡ Melakukan hard obfuscation dengan JsConfuser...")
 
-    # Buat nama file hasil enkripsi
-    encrypted_file_path = f"./encrypted_{file_name}"
-
-    # Jalankan UglifyJS untuk obfuscation
     try:
-        subprocess.run(["uglifyjs", file_path, "-o", encrypted_file_path, "-c", "-m"], check=True)
-
-        await message.reply_document(
-            encrypted_file_path,
-            caption="✅ **File berhasil dienkripsi!**\n🔒 @PyroUbot"
+        subprocess.run(
+            ["node", "confuser.js", input_path, output_path],
+            check=True
         )
-
+        await message.reply_document(
+            output_path,
+            caption="✅ **File berhasil di-obfuscate!**\n🔒 Menggunakan JsConfuser Unicode"
+        )
     except subprocess.CalledProcessError:
-        await msg.edit("❌ Gagal mengenkripsi file!")
+        await msg.edit("❌ Gagal melakukan hard encrypt!")
 
-    # Hapus file sementara
-    os.remove(file_path)
-    os.remove(encrypted_file_path)
+    # Cleanup
+    os.remove(input_path)
+    if os.path.exists(output_path):
+        os.remove(output_path)
