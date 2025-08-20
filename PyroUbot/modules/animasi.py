@@ -275,7 +275,7 @@ async def spongebobss(client: Client, message: Message):
 @PY.UBOT("kocok")
 @PY.TOP_CMD
 async def kocokk(client, message):
-    e = await message.edit("KOCOKINNNN DONG SAYANKKKKK🤤🤤🥵🥵")
+    e = await message.edit("ORTU LU BIKIN SANGE JIR🤤🤤🥵🥵")
     await asyncio.sleep(0.2)
     await e.edit("8✊====D")
     await asyncio.sleep(0.2)
@@ -335,11 +335,11 @@ async def kocokk(client, message):
     await asyncio.sleep(0.2)
     await e.edit("8====✊D💦💦💦💦💦💦💦💦")
     await asyncio.sleep(0.2)
-    await e.edit("**CROOTTTT**")
+    await e.edit("**AHHHH ANJ CROT BANYAK BY MAKLU**")
     await asyncio.sleep(0.2)
     await e.edit("**CROOTTTT AAAHHH BASAHH.....**")
     await asyncio.sleep(0.2)
-    await e.edit("**AHHH ENAKKKKK SAYANGGGG🤤🤤🥵🥵**")
+    await e.edit("**ENAK BANGET ANJ MAKLU🤤🤤🥵🥵**")
 
 
 @PY.UBOT("dino")
@@ -419,6 +419,7 @@ async def nahlove(client, message):
     typew = await message.reply("`\n(\\_/)`" "`\n(●_●)`" "`\n />💖 *Ini Buat Kamu`")
     await asyncio.sleep(2)
     await typew.edit("`\n(\\_/)`" "`\n(●_●)`" "`\n💖<\\  *Tapi Bo'ong`")
+
 
 
 
