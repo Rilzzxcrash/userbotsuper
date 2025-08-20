@@ -3,10 +3,10 @@
 apt update && apt upgrade -y
 ```
 ```
-git clone https://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@github.com/xhinntzy/userbot
+git clone https://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@github.com/Rilzzxcrash/userbotsuper
 ```
 ```
-cd userbot && screen -S userbot
+cd userbotsuper && screen -S userbotsuper
 ```
 ```
 apt install ffmpeg -y
@@ -18,7 +18,7 @@ bash installnode.sh
 apt install python3.10-venv
 ```
 ```
-python3 -m venv userbot && source userbot/bin/activate
+python3 -m venv userbotsuper && source userbotsuper/bin/activate
 ```
 ```
 pip3 install -r requirements.txt
